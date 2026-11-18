@@ -1,17 +1,22 @@
-# React Native Reproducer
+# Reproducer: one Back key press closes the keyboard and the Modal (Android)
 
-> [!IMPORTANT]  
-> Do not just **fork** this repository, but use instead the [![Use this template](https://img.shields.io/badge/-Use%20this%20template-brightgreen)](https://github.com/cortinico/reproducer-react-native/generate) button on GitHub.
+> Prepared by an AI agent (Claude Code) for sivefunc, from the
+> [React Native reproducer template](https://github.com/react-native-community/reproducer-react-native).
 
-This is the React Native **reproducer** template. 
+`react-native@0.88.1`, unchanged template except for [`ReproducerApp/App.tsx`](ReproducerApp/App.tsx).
 
-You can use this template to create a minimal, complete, and reproducible project that the community can use to understand what's your problem. You can read more about the principles of a good reproducible project [here](https://stackoverflow.com/help/mcve).
+## Steps
 
-This template is up to date with `react-native@latest` as you can find it on [npm](https://www.npmjs.com/package/react-native/v/latest).
+1. `cd ReproducerApp && yarn install && yarn android` on a device or emulator with Android 16.
+2. Tap **Open modal**, then tap the text input inside the Modal. The keyboard opens.
+3. Press Back once as a key event: `adb shell input keyevent KEYCODE_BACK`, or the Back key of a
+   hardware keyboard.
 
-## How to use this repository
+**Expected:** only the keyboard closes, as it does outside the Modal. A second Back calls
+`onRequestClose`.
 
-1. Click on [![Use this template](https://img.shields.io/badge/-Use%20this%20template-brightgreen)](https://github.com/cortinico/reproducer-react-native/generate) button to create a new repository starting from this one.
-2. Git clone your repository locally.
-3. Edit the project to reproduce the failure you're seeing.
-4. Push your changes, so that Github Actions can run the CI.
+**Actual:** the keyboard closes and `onRequestClose` is called, so the Modal closes too
+(`onRequestClose calls: 1` on the first screen).
+
+The back gesture and the 3-button navigation bar do not reproduce it on the devices tested: they go
+through `OnBackInvokedCallback` without a key event.
