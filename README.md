@@ -1,22 +1,79 @@
-# Reproducer: one Back key press closes the keyboard and the Modal (Android)
+# react-native-modal-back-key-reproducer
 
-> Prepared by an AI agent (Claude Code) for sivefunc, from the
-> [React Native reproducer template](https://github.com/react-native-community/reproducer-react-native).
+![Build](https://github.com/sivefunc/react-native-modal-back-key-reproducer/workflows/Pre%20Merge%20Checks/badge.svg)
 
-`react-native@0.88.1`, unchanged template except for [`ReproducerApp/App.tsx`](ReproducerApp/App.tsx).
+This is your new React Native Reproducer project.
 
-## Steps
+# Reproducer TODO list
 
-1. `cd ReproducerApp && yarn install && yarn android` on a device or emulator with Android 16.
-2. Tap **Open modal**, then tap the text input inside the Modal. The keyboard opens.
-3. Press Back once as a key event: `adb shell input keyevent KEYCODE_BACK`, or the Back key of a
-   hardware keyboard.
+- [x] 1. Create a new reproducer project.
+- [ ] 2. Git clone your repository locally.
+- [ ] 3. Edit the project to reproduce the failure you're seeing.
+- [ ] 4. Push your changes, so that Github Actions can run the CI.
+- [ ] 5. Make sure the repository is public and share the link with the issue you reported.
 
-**Expected:** only the keyboard closes, as it does outside the Modal. A second Back calls
-`onRequestClose`.
+# How to use this Reproducer
 
-**Actual:** the keyboard closes and `onRequestClose` is called, so the Modal closes too
-(`onRequestClose calls: 1` on the first screen).
+This project has been created with `npx @react-native-community/cli init` and is a vanilla React Native app.
 
-The back gesture and the 3-button navigation bar do not reproduce it on the devices tested: they go
-through `OnBackInvokedCallback` without a key event.
+> [!IMPORTANT]  
+> Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/set-up-your-environment) so that you have a working environment locally.
+
+## Step 1: Start the Metro Server
+
+First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
+
+To start Metro, run the following command from the _root_ of your React Native project:
+
+```bash
+# using npm
+npm start
+
+# OR using Yarn
+yarn start
+```
+
+## Step 2: Start your Application
+
+Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
+
+### For Android
+
+```bash
+# using npm
+npm run android
+
+# OR using Yarn
+yarn android
+```
+
+### For iOS
+
+First, make sure you install dependencies with:
+
+```bash
+cd ios && bundle install && bundle exec pod install
+```
+
+Then you can run the iOS app with:
+
+```bash
+# using npm
+npm run ios
+
+# OR using Yarn
+yarn ios
+```
+
+If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
+
+This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
+
+## Step 3: Modifying your App
+
+Now that you have successfully run the app, let's modify it.
+
+1. Open `App.tsx` in your text editor of choice and edit some lines.
+2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
+
+   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
